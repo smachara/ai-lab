@@ -1,0 +1,64 @@
+@startuml
+!define RECTANGLE_COLOR LightBlue
+!define DB_COLOR LightGray
+!define SERVICE_COLOR LightGreen
+!define EXTERNAL_COLOR LightSalmon
+
+skinparam rectangle {
+  BackgroundColor RECTANGLE_COLOR
+  BorderColor Black
+}
+skinparam database {
+  BackgroundColor DB_COLOR
+  BorderColor Black
+}
+skinparam component {
+  BackgroundColor SERVICE_COLOR
+  BorderColor Black
+}
+skinparam cloud {
+  BackgroundColor EXTERNAL_COLOR
+  BorderColor Black
+}
+
+package "Architecture de l'application" {
+    database "Service A: Référentiel de bonnes pratiques" as A {
+        note left of A: Stocke exigences, critères qualité
+    }
+
+    database "Service B: Résultats d'évaluation" as B {
+        note right of B: Archive des évaluations
+    }
+
+    component "Service C: Base de connaissances & RAG" as C {
+        note top of C: Quadrant + OLlama pour IA et RAG
+    }
+
+    rectangle "Moteur d’automatisation (N8N)" as N8N {
+        note bottom of N8N: Orchestration et intégrations
+    }
+
+    rectangle "Interface Utilisateur" as UI {
+        note top of UI: Vue des données et interactions
+    }
+
+    cloud "GitHub" as GitHub
+    cloud "SonarQube" as SonarQube
+    cloud "Prometheus" as Prometheus
+    cloud "Jira/Confluence" as JiraConfluence
+}
+
+UI --> A : Consultation et modification
+UI --> B : Consultation des résultats
+
+N8N --> A : Récupération des exigences
+N8N --> GitHub : Collecte des données
+N8N --> SonarQube : Collecte des données
+N8N --> Prometheus : Collecte des données
+N8N --> JiraConfluence : Collecte des documents
+
+N8N --> C : Contexte pour analyse IA
+C --> N8N : Validation et recommandations
+
+N8N --> B : Enregistrement des résultats
+@enduml

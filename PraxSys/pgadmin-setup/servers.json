@@ -1,0 +1,15 @@
+{
+    "Servers": {
+      "1": {
+        "Name": "BenchRef Database",
+        "Group": "Servers",
+        "Host": "database_benchref",
+        "Port": 5432,
+        "MaintenanceDB": "postgres",
+        "Username": "directus",
+        "Password": "directus",
+        "SSLMode": "prefer"
+      }
+    }
+  }
+  
